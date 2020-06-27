@@ -1,4 +1,4 @@
 FLASK_APP=home
 FLASK_ENV=development
-IS_HEROKU=True
+IS_HEROKU=False
 SECRET_KEY=flaskenv

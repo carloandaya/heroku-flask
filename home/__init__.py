@@ -25,9 +25,14 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from . import db
+    
     # a simple page that says hello
     @app.route('/')
     def hello():
-        return f'Hello, World!'
+        mongo_db = db.get_db()
+        camera = mongo_db.cameras.find_one()   
+        print(type(camera))
+        return 'Hello, World! I have a {make} {model}.'.format(**camera)
 
     return app
