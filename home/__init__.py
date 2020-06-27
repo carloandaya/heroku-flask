@@ -12,8 +12,9 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     elif os.environ.get('IS_HEROKU') == 'True':
         # load from environment variables
-        app.config.from_mapping(
+        app.config.from_mapping(            
             SECRET_KEY=os.environ.get('SECRET_KEY'),
+            MONGO_URI=os.environ.get('MONGO_URI'),
         )                
     else:
         # load the instance config, if it exists, when not testing
