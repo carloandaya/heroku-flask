@@ -32,8 +32,7 @@ def create_app(test_config=None):
     @app.route('/')
     def hello():
         mongo_db = db.get_db()
-        camera = mongo_db.cameras.find_one()   
-        print(type(camera))
+        camera = mongo_db.cameras.find_one()           
         return 'Hello, World! I have a {make} {model}.'.format(**camera)
 
     return app
