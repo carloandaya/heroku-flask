@@ -15,6 +15,12 @@ def create_app(test_config=None):
         app.config.from_mapping(            
             SECRET_KEY=os.environ.get('SECRET_KEY'),
             MONGO_URI=os.environ.get('MONGO_URI'),
+            CLIENT_ID=os.environ.get('CLIENT_ID'),
+            CLIENT_SECRET=os.environ.get('CLIENT_SECRET'),
+            AUTHORIZATION_BASE_URL=os.environ.get('AUTHORIZATION_BASE_URL'),
+            TOKEN_URL=os.environ.get('TOKEN_URL'),
+            SCOPE=os.environ.get('SCOPE'),
+            REDIRECT_URI=os.environ.get('REDIRECT_URI'),
         )                
     else:
         # load the instance config, if it exists, when not testing
