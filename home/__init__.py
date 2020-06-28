@@ -1,10 +1,6 @@
 import os
 
 from flask import Flask, request, redirect, session, url_for
-from flask.json import jsonify
-
-from requests_oauthlib import OAuth2Session
-
 
 
 def create_app(test_config=None):
@@ -32,43 +28,11 @@ def create_app(test_config=None):
 
     from . import db
     
-    # a simple page that says hello
-    @app.route('/')
-    def hello():
-        mongo_db = db.get_db()
-        camera = mongo_db.cameras.find_one()           
-        return 'Hello, World! I have a {make} {model}.'.format(**camera)
+    db.init_app(app)
 
-    authorization_base_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize'
-    token_url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
-    scope = ['User.Read', 'Directory.Read.All']
-    redirect_uri = 'http://localhost:5000/login/authorized'     # Should match Site URL
-    client_id = app.config.get('CLIENT_ID')
-    client_secret = app.config.get('CLIENT_SECRET')
-
-
-    @app.route('/login')
-    def login(): 
-        msgraph = OAuth2Session(client_id, scope=scope, redirect_uri=redirect_uri)
-        authorization_url, state = msgraph.authorization_url(authorization_base_url)
-
-        session['oauth_state'] = state
-        return redirect(authorization_url)
-
-
-    @app.route('/login/authorized')
-    def authorized():
-        msgraph = OAuth2Session(client_id, state=session['oauth_state'], redirect_uri=redirect_uri)
-        token = msgraph.fetch_token(token_url, client_secret=client_secret, authorization_response=request.url)
-        session['oauth_token'] = token
-        return 'You are authorized!'
-
-
-    @app.route('/profile')
-    def profile(): 
-        msgraph = OAuth2Session(client_id, token=session['oauth_token'])
-        user_data = msgraph.get('https://graph.microsoft.com/v1.0/me')
-        return jsonify(user_data.json())
-
+    with app.app_context(): 
+        from . import auth
+        app.register_blueprint(auth.bp)
+        app.add_url_rule('/', endpoint='hello')
 
     return app
