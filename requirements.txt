@@ -5,13 +5,13 @@ charset-normalizer==2.0.9
 click==7.1.2
 colorama==0.4.3
 dnspython==1.16.0
-Flask==1.1.2
+Flask==2.0.2
 idna==2.10
 isort==4.3.21
-itsdangerous==1.1.0
-Jinja2==2.11.2
+itsdangerous==2.0.1
+Jinja2==3.0.3
 lazy-object-proxy==1.4.3
-MarkupSafe==1.1.1
+MarkupSafe==2.0.1
 mccabe==0.6.1
 oauthlib==3.1.0
 pylint==2.5.3
@@ -23,5 +23,5 @@ six==1.15.0
 toml==0.10.1
 urllib3==1.26.7
 waitress==1.4.4
-Werkzeug==1.0.1
+Werkzeug==2.0.2
 wrapt==1.12.1
